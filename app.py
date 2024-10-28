@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, send_from_directory, redirect, send_from_directory, url_for, flash
 import mysql.connector
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ def connect_to_db():
 # Home route
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return send_from_directory('.','index.html')
 
 # Route to create a new purchase order
 @app.route('/create', methods=['GET', 'POST'])
@@ -52,7 +52,7 @@ def create_po():
 
         return redirect(url_for('index'))
 
-    return render_template('create_po.html')
+    return send_from_directory('.','create_po.html')
 
 # Route to search for purchase orders
 @app.route('/search_po', methods=['GET'])
@@ -108,7 +108,9 @@ def search_po():
     cursor.close()
     connection.close()
 
-    return render_template('search_results.html', results=results)
+    print("Current Directory:", os.getcwd())  # Print the current directory
+    print("Files:", os.listdir("."))  # Print all files in the root directory
+    return send_from_directory('static', 'search_po.html')
 
 # Route to update a purchase order
 @app.route('/update/<po_num>', methods=['GET', 'POST'])
@@ -165,7 +167,7 @@ def update_po(po_num):
         flash("Purchase Order not found.")
         return redirect(url_for('search_po'))
 
-    return render_template('update_po.html', order=order)
+    return send_from_directory('.','update_po.html', order=order)
 # Route to delete a purchase order
 
 @app.route('/delete/<po_num>', methods=['POST'])
@@ -190,9 +192,6 @@ def delete_po(po_num):
 
     return redirect(url_for('search_po'))
 
-@app.route('/search_po_form')
-def search_po_form():
-    return render_template('search_po.html')
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
+
