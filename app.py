@@ -20,7 +20,7 @@ def connect_to_db():
 # Home route
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
 
 # Route to create a new purchase order
 @app.route('/create', methods=['GET', 'POST'])
