@@ -50,10 +50,11 @@
         <h1>Welcome to the Purchase Orders Management System</h1>
         <ul>
             <!-- Create New Purchase Order button -->
-            <li><a href="{{ url_for('create_po') }}">Create New Purchase Order</a></li>
-        
+            <a href="{{ url_for('create_po') }}">Create New Purchase Order</a>
+
             <!-- Search Purchase Orders link -->
-            <li><a href="{{ url_for('search_po') }}">Search Purchase Orders</a></li>
+            <a href="{{ url_for('search_po_form') }}">Search Purchase Orders</a>
+
         </ul>        
     </div>
 </body>
