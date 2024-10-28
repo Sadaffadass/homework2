@@ -19,7 +19,7 @@ def connect_to_db():
 
 # Home route
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
 # Route to create a new purchase order
@@ -33,7 +33,7 @@ def create_po():
         connection = connect_to_db()
         if connection is None:
             flash("Database connection failed.")
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
 
         cursor = connection.cursor()
         try:
@@ -50,7 +50,7 @@ def create_po():
             cursor.close()
             connection.close()
 
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
 
     return render_template('create_po.html')
 
@@ -116,7 +116,7 @@ def update_po(po_num):
     connection = connect_to_db()
     if connection is None:
         flash("Database connection failed.")
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
 
     cursor = connection.cursor()
 
