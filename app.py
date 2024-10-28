@@ -1,5 +1,6 @@
-from flask import Flask, request, send_from_directory, redirect, send_from_directory, url_for, flash
+from flask import Flask, request, redirect, url_for, flash, render_template, send_from_directory
 import mysql.connector
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -20,7 +21,7 @@ def connect_to_db():
 # Home route
 @app.route('/')
 def index():
-    return send_from_directory('.','index.html')
+    return render_template('index.html')  # Use render_template for files in templates folder
 
 # Route to create a new purchase order
 @app.route('/create', methods=['GET', 'POST'])
@@ -37,9 +38,8 @@ def create_po():
 
         cursor = connection.cursor()
         try:
-            # Insert new purchase order
             cursor.execute(
-                "INSERT INTO Purchase_Orders (`PURCHASE_ORDER_NUMBER`, `REQUISITION_NUMBER`, `TOTAL_AMOUNT`) "
+                "INSERT INTO Purchase_Orders (PURCHASE_ORDER_NUMBER, REQUISITION_NUMBER, TOTAL_AMOUNT) "
                 "VALUES (%s, %s, %s)", (po_num, req_num, total_amt)
             )
             connection.commit()
@@ -52,7 +52,7 @@ def create_po():
 
         return redirect(url_for('index'))
 
-    return send_from_directory('.','create_po.html')
+    return render_template('create_po.html')  # Update to render_template
 
 # Route to search for purchase orders
 @app.route('/search_po', methods=['GET'])
@@ -67,7 +67,6 @@ def search_po():
     min_cost = request.args.get('min_cost')
     max_cost = request.args.get('max_cost')
 
-    # Base query
     query = """
         SELECT po.*, d.file_location
         FROM Purchase_Orders po
@@ -100,7 +99,6 @@ def search_po():
         query += " AND po.total_amount <= %s"
         params.append(max_cost)
 
-    # Execute query
     connection = connect_to_db()
     cursor = connection.cursor()
     cursor.execute(query, tuple(params))
@@ -108,9 +106,7 @@ def search_po():
     cursor.close()
     connection.close()
 
-    print("Current Directory:", os.getcwd())  # Print the current directory
-    print("Files:", os.listdir("."))  # Print all files in the root directory
-    return send_from_directory('static', 'search_po.html')
+    return render_template('search_results.html', results=results)
 
 # Route to update a purchase order
 @app.route('/update/<po_num>', methods=['GET', 'POST'])
@@ -123,7 +119,6 @@ def update_po(po_num):
     cursor = connection.cursor()
 
     if request.method == 'POST':
-        # Retrieve updated form data
         req_num = request.form['req_num']
         total_amt = request.form['total_amt']
         dept_num = request.form['dept_num']
@@ -138,7 +133,6 @@ def update_po(po_num):
         input_date = request.form['input_date']
 
         try:
-            # Update query for the specific purchase order
             cursor.execute("""
                 UPDATE Purchase_Orders
                 SET REQUISITION_NUMBER = %s, TOTAL_AMOUNT = %s, DEPARTMENT_NUMBER = %s, VENDOR_NUMBER = %s,
@@ -157,7 +151,6 @@ def update_po(po_num):
 
         return redirect(url_for('search_po'))
 
-    # Fetch current order data for the update form
     cursor.execute("SELECT * FROM Purchase_Orders WHERE PURCHASE_ORDER_NUMBER = %s", (po_num,))
     order = cursor.fetchone()
     cursor.close()
@@ -167,9 +160,9 @@ def update_po(po_num):
         flash("Purchase Order not found.")
         return redirect(url_for('search_po'))
 
-    return send_from_directory('.','update_po.html', order=order)
-# Route to delete a purchase order
+    return render_template('update_po.html', order=order)
 
+# Route to delete a purchase order
 @app.route('/delete/<po_num>', methods=['POST'])
 def delete_po(po_num):
     connection = connect_to_db()
@@ -180,7 +173,6 @@ def delete_po(po_num):
     cursor = connection.cursor()
 
     try:
-        # Delete query for the specified purchase order
         cursor.execute("DELETE FROM Purchase_Orders WHERE PURCHASE_ORDER_NUMBER = %s", (po_num,))
         connection.commit()
         flash("Purchase Order deleted successfully.")
@@ -194,4 +186,4 @@ def delete_po(po_num):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-
+    app.run(debug=True)
