@@ -67,7 +67,7 @@
         <p>Please enter information in any of the fields below to retrieve matching purchase orders.</p>
     
         <form method="GET" action="{{ url_for('search_po') }}">
-            <a href="{{ url_for('home') }}" class="back-home-btn">Back to Home</a>
+            <a href="{{ url_for('index') }}" class="back-home-btn">Back to Home</a>
             <label for="po_num">Purchase Order Number:</label>
             <input type="text" id="po_num" name="po_num" placeholder="Enter Purchase Order Number">
             
