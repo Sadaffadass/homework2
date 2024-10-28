@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Orders</title>
+</head>
+<body>
+    <h1>All Purchase Orders</h1>
+
+    <!-- Add the Create Button with adjusted positioning -->
+<a href="{{ url_for('create_po') }}" 
+style="padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; 
+       border-radius: 5px; display: inline-block; margin-bottom: 10px; margin-top: -15px;">
+ Create New Purchase Order
+</a>
+
+<!-- Add Back to Home Button -->
+<a href="{{ url_for('home') }}" class="back-btn"
+style="padding: 10px; background-color: #2d34b6; color: white; text-decoration: none; 
+       border-radius: 5px; display: inline-block; margin-bottom: 10px; margin-top: -15px;">
+    Back to Home
+</a>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Table to Display All Purchase Orders and Associated Documents -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Purchase Order Number</th>
+                <th>Requisition Number</th>
+                <th>Total Amount</th>
+                <th>Zip Code</th>
+                <th>Department Number</th>
+                <th>Vendor Number</th>
+                <th>Cost Center Number</th>
+                <th>Type Code</th>
+                <th>Category Code</th>
+                <th>Status Code</th>
+                <th>Vouched Amount</th>
+                <th>Total Items</th>
+                <th>PO Balance</th>
+                <th>Input Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order[0] }}</td>  <!-- Purchase Order Number -->
+                <td>{{ order[1] }}</td>  <!-- Requisition Number -->
+                <td>{{ order[2] }}</td>  <!-- Total Amount -->
+                <td>{{ order[3] }}</td>  <!-- Zip Code -->
+                <td>{{ order[4] }}</td>  <!-- Department Number -->
+                <td>{{ order[5] }}</td>  <!-- Vendor Number -->
+                <td>{{ order[6] }}</td>  <!-- Cost Center Number -->
+                <td>{{ order[7] }}</td>  <!-- Type Code -->
+                <td>{{ order[8] }}</td>  <!-- Category Code -->
+                <td>{{ order[9] }}</td>  <!-- Status Code -->
+                <td>{{ order[10] }}</td>  <!-- Vouched Amount -->
+                <td>{{ order[11] }}</td> <!-- Total Items -->
+                <td>{{ order[12] }}</td> <!-- PO Balance -->
+                <td>{{ order[13] }}</td> <!-- Input Date -->
+
+                <!-- Actions -->
+                <td>
+                    <a href="{{ url_for('update_po', po_num=order[0]) }}">Update</a> |
+                    <a href="{{ url_for('delete_po', po_num=order[0]) }}" onclick="return confirm('Are you sure you want to delete this order?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

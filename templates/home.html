@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+        li {
+            margin: 30px 0;
+            font-size: 18px;
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #d44c89;
+            padding: 10px 30px;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #6045a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Purchase Orders Management System</h1>
+        <ul>
+            <!-- Add the 'Create New Purchase Order' button here -->
+            <li><a href="{{ url_for('create_po') }}">Create New Purchase Order</a></li>
+
+            <!-- Other existing links -->
+            <li><a href="{{ url_for('search_po_form') }}">Search Purchase Orders</a></li>
+           
+        </ul>
+    </div>
+</body>
+</html>

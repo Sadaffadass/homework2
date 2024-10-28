@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Purchase Order</title>
+</head>
+<body>
+    <h1>Create Purchase Order</h1>
+    <form action="{{ url_for('create_po') }}" method="POST">
+
+        <!-- Purchase Order Number: Must start with 'PO' -->
+        <label>Purchase Order Number:</label>
+        <input type="text" name="po_num" required pattern="^PO[0-9]{1,8}$" 
+               title="Must start with 'PO' followed by up to 8 digits"><br>
+
+        <!-- Requisition Number: Must start with 'RQ' -->
+        <label>Requisition Number:</label>
+        <input type="text" name="req_num" required pattern="^RQ[0-9]{1,8}$" 
+               title="Must start with 'RQ' followed by up to 8 digits"><br>
+
+        <!-- Total Amount: Positive decimal, up to two decimal places -->
+        <label>Total Amount:</label>
+        <input type="number" step="0.01" name="total_amt" min="0" required 
+               title="Enter a positive amount with up to two decimal places"><br>
+
+ <!-- Department Number: Input for manual entry, numeric only -->
+<label>Department Number:</label>
+<input type="number" name="dept_num" required min="1" title="Enter a valid department number"><br>
+
+ <!-- Vendor Number: Input for manual entry, numeric only -->
+<label>Vendor Number:</label>
+<input type="number" name="vendor_num" required min="1" title="Enter a valid vendor number"><br>
+
+<!-- Cost Center Number: Input for manual entry, numeric only -->
+<label>Cost Center Number:</label>
+<input type="number" name="cost_center_num" required min="1" title="Enter a valid cost center number"><br>
+
+
+        <!-- Type Code: Dropdown -->
+        <label>Type Code:</label>
+        <select name="type_code" required>
+            <option value="">Select Type Code</option>
+            <option value="B">B - Goods-Serv</option>
+            <option value="B1">G - Goods</option>
+            <option value="C1">S - Services C</option>
+            <!-- Add more options as needed -->
+        </select><br>
+
+     <!-- Category Code: Dropdown with specific options -->
+<label>Category Code:</label>
+<select name="category_code" required>
+    <option value="">Select Category Code</option>
+    <option value="AC">AC - CITY ANNUAL CONTRACTS</option>
+    <option value="CD">CD - HOUSING REHAB PROJECTS</option>
+    <option value="CO">CO - CONSTRUCTION PROJECTS OVER $25,000</option>
+    <option value="CU">CU - CONSTRUCTION PROJECTS UNDER $25,000</option>
+    <option value="EM">EM - EMERGENCY</option>
+    <option value="FL">FL - EMERGENCY PURCHASES AUGUST 2016 FLOOD EV</option>
+    <option value="MS">MS - MISCELLANEOUS NON-QUOTES</option>
+    <option value="PS">PS - PROFESSIONAL SERVICES</option>
+    <option value="QT">QT - INFORMAL QUOTATIONS</option>
+    <option value="SB">SB - SEALED BIDS</option>
+    <option value="SC">SC - STATE CONTRACT</option>
+    <option value="SS">SS - SOLE SOURCE</option>
+</select><br>
+
+    <!-- Status Code: Dropdown with specific options -->
+<label>Status Code:</label>
+<select name="status_code" required>
+    <option value="">Select Status Code</option>
+    <option value="1">1 - UNENCUMBRD</option>
+    <option value="2">2 - ENCMBRD-NP</option>
+    <option value="3">3 - ENCMBRD-PT</option>
+    <option value="4">4 - CHGD-NT-EN</option>
+    <option value="5">5 - CHGD-EN-NP</option>
+    <option value="6">6 - CHGD-EN-PT</option>
+    <option value="7">7 - EN-PT-PART</option>
+    <option value="8">8 - CH-NT-PART</option>
+    <option value="10">10 - CH-EN-PART</option>
+    <option value="11">11 - CLOSED</option>
+    <option value="12">12 - CANCELLED</option>
+    <option value="13">13 - CHG-ENC-NP</option>
+</select><br>
+
+        <!-- Vouched Amount: Positive decimal, up to two decimal places -->
+        <label>Vouched Amount:</label>
+        <input type="number" step="0.01" name="vouched_amt" min="0" required 
+               title="Enter a positive amount with up to two decimal places"><br>
+
+        <!-- Total Items: Positive integer only -->
+        <label>Total Items:</label>
+        <input type="number" name="total_items" required min="1" max="9999" 
+               title="Enter a positive integer up to 4 digits"><br>
+
+        <!-- PO Balance: Positive decimal, up to two decimal places -->
+        <label>PO Balance:</label>
+        <input type="number" step="0.01" name="po_balance" min="0" required 
+               title="Enter a positive amount with up to two decimal places"><br>
+
+        <!-- Input Date -->
+        <label>Input Date:</label>
+        <input type="datetime-local" name="input_date" required><br>
+
+        <br>
+        <!-- Submit Button -->
+        <button type="submit">Create Purchase Order</button>
+    </form>
+</body>
+</html>

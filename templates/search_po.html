@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Purchase Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .search-btn {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Back to Home Button Style */
+        .back-home-btn {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            background-color: #2d34b6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-home-btn:hover {
+            background-color: #1e2594;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Purchase Orders</h1>
+        
+        <p>Please enter information in any of the fields below to retrieve matching purchase orders.</p>
+    
+        <form method="GET" action="{{ url_for('search_po') }}">
+            <a href="{{ url_for('home') }}" class="back-home-btn">Back to Home</a>
+            <label for="po_num">Purchase Order Number:</label>
+            <input type="text" id="po_num" name="po_num" placeholder="Enter Purchase Order Number">
+            
+            <label for="zip_code">Zip Code:</label>
+            <input type="text" id="zip_code" name="zip_code" placeholder="Enter Zip Code">
+
+            <label for="vendor_num">Vendor Number:</label>
+            <input type="text" id="vendor_num" name="vendor_num">
+
+            <label for="dept_num">Department Number:</label>
+            <input type="text" id="dept_num" name="dept_num">
+
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date">
+
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date">
+
+            <label for="min_cost">Min Cost:</label>
+            <input type="number" id="min_cost" name="min_cost" step="0.01">
+
+            <label for="max_cost">Max Cost:</label>
+            <input type="number" id="max_cost" name="max_cost" step="0.01">
+
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+    </div>
+</body>
+</html>

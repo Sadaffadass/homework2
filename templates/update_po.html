@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Purchase Order</title>
+</head>
+<body>
+    <h1>Update Purchase Order</h1>
+    
+    <form action="{{ url_for('update_po', po_num=order[0]) }}" method="POST">
+        <label for="po_num">Purchase Order Number:</label>
+        <input type="text" id="po_num" name="po_num" value="{{ order[0] }}" readonly><br>
+
+        <label for="req_num">Requisition Number:</label>
+        <input type="text" id="req_num" name="req_num" value="{{ order[1] }}" required><br>
+
+        <label for="total_amt">Total Amount:</label>
+        <input type="number" step="0.01" id="total_amt" name="total_amt" value="{{ order[2] }}" required><br>
+
+        <label for="dept_num">Department Number:</label>
+        <input type="number" id="dept_num" name="dept_num" value="{{ order[3] }}" required><br>
+
+        <label for="vendor_num">Vendor Number:</label>
+        <input type="number" id="vendor_num" name="vendor_num" value="{{ order[4] }}" required><br>
+
+        <label for="cost_center_num">Cost Center Number:</label>
+        <input type="number" id="cost_center_num" name="cost_center_num" value="{{ order[5] }}" required><br>
+
+        <!-- Type Code -->
+        <label for="type_code">Type Code:</label>
+        <select id="type_code" name="type_code" required>
+            <option value="">Select Type Code</option>
+            <option value="B" {% if order[6] == 'B' %}selected{% endif %}>B - Goods-Serv</option>
+            <option value="B1" {% if order[6] == 'B1' %}selected{% endif %}>G - Goods</option>
+            <option value="C1" {% if order[6] == 'C1' %}selected{% endif %}>S - Services C</option>
+        </select><br>
+
+        <!-- Category Code -->
+        <label for="category_code">Category Code:</label>
+        <select id="category_code" name="category_code" required>
+            <option value="AC" {% if order[7] == 'AC' %}selected{% endif %}>AC - CITY ANNUAL CONTRACTS</option>
+            <option value="CD" {% if order[7] == 'CD' %}selected{% endif %}>CD - HOUSING REHAB PROJECTS</option>
+            <option value="CO" {% if order[7] == 'CO' %}selected{% endif %}>CO - CONSTRUCTION PROJECTS OVER $25,000</option>
+            <option value="CU" {% if order[7] == 'CU' %}selected{% endif %}>CU - CONSTRUCTION PROJECTS UNDER $25,000</option>
+            <option value="EM" {% if order[7] == 'EM' %}selected{% endif %}>EM - EMERGENCY</option>
+            <option value="FL" {% if order[7] == 'FL' %}selected{% endif %}>FL - EMERGENCY PURCHASES AUGUST 2016 FLOOD EV</option>
+            <option value="MS" {% if order[7] == 'MS' %}selected{% endif %}>MS - MISCELLANEOUS NON-QUOTES</option>
+            <option value="PS" {% if order[7] == 'PS' %}selected{% endif %}>PS - PROFESSIONAL SERVICES</option>
+            <option value="QT" {% if order[7] == 'QT' %}selected{% endif %}>QT - INFORMAL QUOTATIONS</option>
+            <option value="SB" {% if order[7] == 'SB' %}selected{% endif %}>SB - SEALED BIDS</option>
+            <option value="SC" {% if order[7] == 'SC' %}selected{% endif %}>SC - STATE CONTRACT</option>
+            <option value="SS" {% if order[7] == 'SS' %}selected{% endif %}>SS - SOLE SOURCE</option>
+        </select><br>
+
+        <!-- Status Code -->
+        <label for="status_code">Status Code:</label>
+        <select id="status_code" name="status_code" required>
+            <option value="1" {% if order[8] == '1' %}selected{% endif %}>1 - UNENCUMBRD</option>
+            <option value="10" {% if order[8] == '10' %}selected{% endif %}>10 - CH-EN-PART</option>
+            <option value="11" {% if order[8] == '11' %}selected{% endif %}>11 - CLOSED</option>
+            <option value="12" {% if order[8] == '12' %}selected{% endif %}>12 - CANCELLED</option>
+            <option value="13" {% if order[8] == '13' %}selected{% endif %}>13 - CHG-ENC-NP</option>
+            <option value="2" {% if order[8] == '2' %}selected{% endif %}>2 - ENCMBRD-NP</option>
+            <option value="3" {% if order[8] == '3' %}selected{% endif %}>3 - ENCMBRD-PT</option>
+            <option value="4" {% if order[8] == '4' %}selected{% endif %}>4 - CHGD-NT-EN</option>
+            <option value="5" {% if order[8] == '5' %}selected{% endif %}>5 - CHGD-EN-NP</option>
+            <option value="6" {% if order[8] == '6' %}selected{% endif %}>6 - CHGD-EN-PT</option>
+            <option value="7" {% if order[8] == '7' %}selected{% endif %}>7 - EN-PT-PART</option>
+            <option value="8" {% if order[8] == '8' %}selected{% endif %}>8 - CH-NT-PART</option>
+        </select><br>
+
+        <label for="vouched_amt">Vouched Amount:</label>
+        <input type="number" step="0.01" id="vouched_amt" name="vouched_amt" value="{{ order[9] }}" required><br>
+
+        <label for="total_items">Total Items:</label>
+        <input type="number" id="total_items" name="total_items" value="{{ order[10] }}" required><br>
+
+        <label for="po_balance">PO Balance:</label>
+        <input type="number" step="0.01" id="po_balance" name="po_balance" value="{{ order[11] }}" required><br>
+
+        <label for="input_date">Input Date:</label>
+        <input type="datetime-local" id="input_date" name="input_date" value="{{ order[12]|replace(' ', 'T') }}" required><br>
+
+        <br>
+        <input type="submit" value="Update Purchase Order">
+    </form>
+
+    <!-- Back to List Link with search parameters -->
+    <a href="{{ url_for('search_po', po_num=request.args.get('po_num'), zip_code=request.args.get('zip_code'), 
+                    start_date=request.args.get('start_date'), end_date=request.args.get('end_date'), 
+                    vendor_num=request.args.get('vendor_num'), dept_num=request.args.get('dept_num'), 
+                    min_cost=request.args.get('min_cost'), max_cost=request.args.get('max_cost')) }}">
+        Back to List
+    </a>
+
+</body>
+</html>
