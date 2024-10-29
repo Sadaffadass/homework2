@@ -14,8 +14,8 @@ def connect_to_db():
             database='homework_2'
         )
         return connection
-    except mysql.connector.Error as err:
-        print(f"Error: {err}")
+   except mysql.connector.Error as err:
+        app.logger.error(f"Database connection error: {err}")
         return None
 
 # Home route
