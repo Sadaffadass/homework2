@@ -12,10 +12,10 @@ def connect_to_db():
             password='44245989Sf',   # Replace with remote user's password
             database='homework_2'    # Replace with your database name
         )
+        print("Database connection successful.")
         return connection
     except mysql.connector.Error as err:
-        # Log the error directly to the console
-        print(f"Database connection error: {err}")
+        print(f"Database connection error: {err}")  # This will print the specific error to logs
         return None
 
 
