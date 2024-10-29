@@ -1,5 +1,8 @@
+from flask import Flask, request, render_template, redirect, url_for, flash
 import mysql.connector
-from flask import current_app as app
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 
 def connect_to_db():
     try:
@@ -184,4 +187,3 @@ def delete_po(po_num):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-    app.run(debug=True)
