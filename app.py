@@ -8,7 +8,7 @@ app.secret_key = 'your_secret_key'
 def connect_to_db():
     try:
         connection = mysql.connector.connect(
-            host=''73.95.170.254'',
+            host='73.95.170.254',
             user='remote_user',
             password='44245989Sf',
             database='homework_2'
