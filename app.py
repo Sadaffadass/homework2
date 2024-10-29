@@ -11,7 +11,8 @@ def connect_to_db():
         )
         return connection
     except mysql.connector.Error as err:
-        app.logger.error(f"Database connection error: {err}")
+        # Log the error directly to the console
+        print(f"Database connection error: {err}")
         return None
 
 
