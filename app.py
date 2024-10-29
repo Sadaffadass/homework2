@@ -10,7 +10,7 @@ def connect_to_db():
             host='73.95.170.254',       # Public IP address
             user='remote_user',         # Replace with remote username
             password='you_password',   # Replace with remote user's password
-            database='homework_2'    # Replace with your database name
+            database='Homework_2_final'    # Replace with your database name
         )
         print("Database connection successful.")
         return connection
