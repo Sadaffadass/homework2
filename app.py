@@ -1,22 +1,19 @@
-from flask import Flask, request, redirect, url_for, flash, render_template, send_from_directory
 import mysql.connector
-import os
-
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+from flask import current_app as app
 
 def connect_to_db():
     try:
         connection = mysql.connector.connect(
-            host='73.95.170.254',
-            user='remote_user',
-            password='44245989Sf',
-            database='homework_2'
+            host='73.95.170.254',       # Public IP address
+            user='remote_user',         # Replace with remote username
+            password='44245989Sf',   # Replace with remote user's password
+            database='homework_2'    # Replace with your database name
         )
         return connection
-   except mysql.connector.Error as err:
+    except mysql.connector.Error as err:
         app.logger.error(f"Database connection error: {err}")
         return None
+
 
 # Home route
 @app.route('/')
