@@ -9,7 +9,7 @@ def connect_to_db():
         connection = mysql.connector.connect(
             host='73.95.170.254',       # Public IP address
             user='remote_user',         # Replace with remote username
-            password='44245989Sf',   # Replace with remote user's password
+            password='you_password',   # Replace with remote user's password
             database='homework_2'    # Replace with your database name
         )
         print("Database connection successful.")
